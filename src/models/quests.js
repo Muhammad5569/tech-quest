@@ -25,7 +25,14 @@ const questSchema = mongoose.Schema({
     },
     solution: {
         type: String,
+    },
+    status:{
+        type: Boolean,
+        required: true,
+        default: false
     }
+},{
+    timestamps: true
 })
 
 
