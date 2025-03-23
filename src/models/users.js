@@ -34,6 +34,21 @@ const userSchema = mongoose.Schema({
                 }
             }
     },
+    score:{
+        type:Number,
+        required:true,
+        default:0
+    },
+    solvedQuests:[{
+        questId:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'Quest'
+        },
+        solvedTime:{
+            type:Date,
+            default:Date.now
+        }
+    }],
     tokens:[
         {
             token:{
