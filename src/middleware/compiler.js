@@ -1,4 +1,4 @@
-import axios from "axios"
+const axios = require('axios')
 import "dotenv"
 
 const SPHERE_ENGINE_API_URL = process.env.SPHERE_ENGINE_API_URL
