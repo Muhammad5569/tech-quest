@@ -11,10 +11,7 @@ const questRouter = require('./routers/quests');
 const app = express();
 
 // MongoDB Connection
-mongoose.connect('mongodb://localhost:27017/techquest', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect('mongodb://localhost:27017/techquest')
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('MongoDB connection error:', err));
 
