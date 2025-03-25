@@ -37,8 +37,8 @@ app.use(questRouter);
 
 // Self-signed SSL Cert (For Testing - Replace with Let's Encrypt in production)
 const httpsOptions = {
-  key: fs.readFileSync('~/key.pem'),    // Generated self-signed key
-  cert: fs.readFileSync('~/cert.pem')   // Generated self-signed cert
+  key: fs.readFileSync('/home/ubuntu/key.pem'),    // Generated self-signed key
+  cert: fs.readFileSync('/home/ubuntu/cert.pem')   // Generated self-signed cert
 };
 
 // Ports
