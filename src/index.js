@@ -6,6 +6,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const userRouter = require('./routers/users');
 const questRouter = require('./routers/quests');
+const cors = require('cors');
 
 // Initialize Express
 const app = express();
