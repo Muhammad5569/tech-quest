@@ -19,6 +19,7 @@ mongoose.connect('mongodb://localhost:27017/techquest')
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // Enhanced CORS config
 app.use(cors({
