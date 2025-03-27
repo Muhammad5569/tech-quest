@@ -82,6 +82,14 @@ router.post('/quests/compiler/:id', auth, async (req, res) => {
         res.status(500).send({ error: error.message }); // Send a proper error response
     }
 });
+router.delete('/quests/delete/:id', async (req, res) => {
+    try {
+        await Quest.findOneAndDelete(req.params.id)
+        res.json('quest deleted sucesfully')
+    } catch (error) {
+        res.send(error).status(500)
+    }
+})
 router.post('/quests/reset', auth, async(req, res) => {
     try {
         req.user.score = 0
@@ -89,7 +97,7 @@ router.post('/quests/reset', auth, async(req, res) => {
         await req.user.save()
         res.send(req.user)
     } catch (error) {
-        res.send(error)
+        res.send(error).status(500)
     }
 })
 
