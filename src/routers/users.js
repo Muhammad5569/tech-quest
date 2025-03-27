@@ -39,7 +39,9 @@ router.post('/users/login', async (req, res) => {
         console.log(await user.generateAuthToken())
         res.send({user, token})
     } catch (error) {
-        res.json({message: error.message}).status(500)
+        res.status(401).send({ 
+            error: error.message || 'Login failed' 
+        });
     }   
 })
 router.post('/users/logout', auth, async (req, res) => {
