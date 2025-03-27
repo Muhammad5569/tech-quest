@@ -7,10 +7,10 @@ const mongoose = require('mongoose');
 const userRouter = require('./routers/users');
 const questRouter = require('./routers/quests');
 const cors = require('cors');
-
+const morgan =require('morgan')
 // Initialize Express
 const app = express();
-
+app.use(morgan('tiny'))
 // MongoDB Connection
 mongoose.connect('mongodb://localhost:27017/techquest')
 .then(() => console.log('Connected to MongoDB'))
