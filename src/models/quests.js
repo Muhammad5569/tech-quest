@@ -5,6 +5,9 @@ const questSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    category:{
+        type: String,
+    },
     description:{
         type: String,
         required: true,
@@ -16,6 +19,9 @@ const questSchema = mongoose.Schema({
     defaultCode: {
         type: String,
     },
+    yourTask: {
+        type:String,
+    },
     points: {
         type: Number
     },
@@ -26,10 +32,8 @@ const questSchema = mongoose.Schema({
     solution: {
         type: String,
     },
-    status:{
-        type: Boolean,
-        required: true,
-        default: false
+    learningOutcome:{
+        type: String,
     }
 },{
     timestamps: true
