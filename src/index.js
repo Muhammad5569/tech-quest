@@ -20,12 +20,16 @@ mongoose.connect('mongodb://localhost:27017/techquest')
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CORS Configuration
+// Enhanced CORS config
 app.use(cors({
-  origin: ['https://cracked-c0de.github.io/', 'http://localhost:5173'],
+  origin: ['https://cracked-c0de.github.io', 'http://localhost:5173'],
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Explicit preflight handling
+app.options('*', cors());
 
 // Routes
 app.use(userRouter);
