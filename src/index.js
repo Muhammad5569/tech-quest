@@ -47,21 +47,15 @@ const HTTPS_PORT = process.env.HTTPS_PORT || 443;
 
 // Create servers
 const httpsServer = https.createServer(httpsOptions, app);
-const httpServer = http.createServer((req, res) => {
-  res.writeHead(301, { 
-    "Location": `https://${req.headers.host}${req.url}` 
-  });
-  res.end();
+http.createServer(app).listen(HTTP_PORT, () => {
+  console.log(`HTTP redirect server running on port ${HTTP_PORT}`);
 });
-
 // Start servers
 httpsServer.listen(HTTPS_PORT, () => {
   console.log(`HTTPS Server running on port ${HTTPS_PORT}`);
 });
 
-httpServer.listen(HTTP_PORT, () => {
-  console.log(`HTTP redirect server running on port ${HTTP_PORT}`);
-});
+
 
 // Error handling
 process.on('unhandledRejection', (err) => {
