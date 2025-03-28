@@ -22,6 +22,14 @@ router.get('/quests', async (req, res) => {
         res.send(error)
     }
 })
+router.get('/quests/:id', async (req, res) => {
+    try {
+        const quests = await Quest.findById(req.body_id)
+        res.send(quests)
+    } catch (error) {
+        res.send(error)
+    }
+})
 router.patch('/quests/:id', async (req,res) => {
     const updates = Object.keys(req.body)
     try {
