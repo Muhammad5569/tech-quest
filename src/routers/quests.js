@@ -24,7 +24,7 @@ router.get('/quests', async (req, res) => {
 })
 router.get('/quests/:id', async (req, res) => {
     try {
-        const quest = await Quest.findById(req.body._id)
+        const quest = await Quest.findById(req.params._id)
         res.send(quest)
     } catch (error) {
         res.send(error)
