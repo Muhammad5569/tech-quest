@@ -25,9 +25,12 @@ router.get('/quests', async (req, res) => {
 router.get('/quests/:id', async (req, res) => {
     try {
         const quest = await Quest.findById(req.params.id)
+        console.log('id: ', req.params.id)
+        console.log('quest', quest)
         res.send(quest)
     } catch (error) {
-        res.send(error)
+        console.error('Error:', error); // Log the error for debugging
+        res.status(500).send({ error: error.message }); // Send a proper error response
     }
 })
 router.patch('/quests/:id', async (req,res) => {
@@ -35,7 +38,8 @@ router.patch('/quests/:id', async (req,res) => {
     try {
        updates.forEach(update => { req.quest[update] = req.body[update]  });
     } catch (error) {
-        res.status(400).send(error)
+        console.error('Error:', error); // Log the error for debugging
+        res.status(500).send({ error: error.message }); // Send a proper error response
     }
 })
 
