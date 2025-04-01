@@ -1,3 +1,7 @@
 node_modules/
 data/
+<<<<<<< HEAD
 .env
+=======
+.env
+>>>>>>> 07d325c0aa1c2c93e20ce113359e8e92a8dab3f3

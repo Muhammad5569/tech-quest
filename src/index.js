@@ -21,26 +21,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-// // Enhanced CORS config
-// app.use(cors({
-//   origin: ['https://cracked-c0de.github.io', 'http://localhost:5173'],
-//   credentials: true,
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-//   allowedHeaders: ['Content-Type', 'Authorization']
-// }));
-
-
-// Explicit preflight handling
-
 
 // Routes
 app.use(userRouter);
 app.use(questRouter);
-
+const keyPath = process.env.SSL_KEY_PATH
+const certPath = process.env.SSL_CERTIFICAT_PATH
 // Self-signed SSL Cert (For Testing - Replace with Let's Encrypt in production)
 const httpsOptions = {
-  key: fs.readFileSync('/home/ubuntu/key.pem'),    // Generated self-signed key
-  cert: fs.readFileSync('/home/ubuntu/cert.pem')   // Generated self-signed cert
+  key: fs.readFileSync(keyPath),    // Generated self-signed key
+  cert: fs.readFileSync(certPath)   // Generated self-signed cert
 };
 
 // Ports
