@@ -1,3 +1,8 @@
 node_modules/
 data/
 .env
+certificate.crt
+certificate.csr
+certificate.pem
+private.key
+private.pem

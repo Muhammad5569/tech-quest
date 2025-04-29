@@ -36,8 +36,18 @@ router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
-        
-        res.send({user, token})
+        res.cookie('userType', user.role,{
+            httpOnly: true,
+            secure: false,
+            sameSite: 'strict',
+          } )
+        res.cookie('authToken', token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'strict',
+            maxAge: 3600000 // 1 hour
+          });
+        res.send(user)
     } catch (error) {
         res.status(401).send({ 
             error: error.message || 'Login failed' 

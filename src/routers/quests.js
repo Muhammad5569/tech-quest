@@ -5,6 +5,7 @@ const auth = require('../middleware/auth')
 const {submission, pollSubmissionResult}  = require('../middleware/compiler')
 const router = new express.Router()
 
+//Create a new Quest
 router.post('/quests', async (req, res) => {
     const quest = new Quest(req.body)
     try{
@@ -14,6 +15,7 @@ router.post('/quests', async (req, res) => {
         res.send(error).status(500)
     }
 })
+//Read all quests
 router.get('/quests', async (req, res) => {
     try {
         const quests = await Quest.find({})
@@ -22,6 +24,7 @@ router.get('/quests', async (req, res) => {
         res.send(error)
     }
 })
+//Read quest with id
 router.get('/quests/:id', async (req, res) => {
     try {
         const quest = await Quest.findById(req.params.id)
@@ -33,6 +36,7 @@ router.get('/quests/:id', async (req, res) => {
         res.status(500).send({ error: error.message }); // Send a proper error response
     }
 })
+//Change quest
 router.patch('/quests/:id', async (req,res) => {
     const updates = Object.keys(req.body)
     try {
@@ -42,7 +46,7 @@ router.patch('/quests/:id', async (req,res) => {
         res.status(500).send({ error: error.message }); // Send a proper error response
     }
 })
-
+//Compiler with 3rd party API          || api expired
 router.post('/quests/compiler/:id', auth, async (req, res) => {
     try {
         const questId = req.params.id;
@@ -94,6 +98,7 @@ router.post('/quests/compiler/:id', auth, async (req, res) => {
         res.status(500).send({ error: error.message }); // Send a proper error response
     }
 });
+//Delete quest
 router.delete('/quests/delete/:id', async (req, res) => {
     try {
         await Quest.findOneAndDelete(req.params.id)
@@ -102,14 +107,31 @@ router.delete('/quests/delete/:id', async (req, res) => {
         res.send(error).status(500)
     }
 })
+//Reset solved quests of User
 router.post('/quests/reset', auth, async(req, res) => {
     try {
         req.user.score = 0
         req.user.solvedQuests = []
         await req.user.save()
-        res.send(req.user)
+        res.json('Score Reseted to 0')
     } catch (error) {
         res.send(error).status(500)
+    }
+})
+//Manual checking                       
+router.post('/quests/attempts', auth, async(req, res) => {
+    const userId = req.user.id
+    try {        
+        const user = await User.findById(userId)
+        const attempt = req.body.attempt
+        //const attempt = JSON.parse(req.body.attempt)
+        // user.attempts.push({
+        //     value: attempt
+        // })
+        console.log(attempt, 'attempt')
+        res.send(user)
+    } catch (error) {
+        res.send({message:error.message})
     }
 })
 

@@ -23,6 +23,10 @@ const userSchema = mongoose.Schema({
             }
         }
     },
+    role:{
+        type: String,
+        required: true
+    },
     password:{
         type: String,
         required: true,
@@ -47,6 +51,11 @@ const userSchema = mongoose.Schema({
         solvedTime:{
             type:Date,
             default:Date.now
+        }
+    }],
+    attempts:[{ 
+        value:{
+            type: String,
         }
     }],
     tokens:[
