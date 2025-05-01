@@ -79,24 +79,32 @@ router.get('/users/me', auth, async (req, res) => {
     res.send(req.user)
 })
 router.patch('/users/me', auth, async (req, res) => {
-    const updates = Object.keys(req.body)
-    const allowUpdates = ['name', 'email', 'password', 'age']
-    const isValidOperation = updates.every((update)=> allowUpdates.includes(update))
-
+    const updates = Object.keys(req.body);
+    const allowedUpdates = ['name', 'email', 'password', 'age'];
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
+    
     if (!isValidOperation) {
-        return res.status(400).send({error: 'Invalid updates!'})
+      return res.status(400).send({ error: 'Invalid updates!' });
     }
-
-    try{
-        updates.forEach((update)=> req.user[update] = req.body[update])
-    }catch(error){
-        res.status(400).send(error)
-    }
-})
-router.delete('/users/me', auth, async (req, res) => {
+    
     try {
-        await req.user.remove()
-        res.send(req.user)  
+      // Apply each update to the user object
+      updates.forEach((update) => {
+        req.user[update] = req.body[update];
+      });
+      
+      // Save 
+      await req.user.save();
+    
+      res.send(req.user);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  });
+router.delete('/users/:id', async (req, res) => {
+    try {
+        await User.deleteOne({_id:req.params.id})
+        res.send('deleted')  
     } catch (error) {
         res.send(error)
     }

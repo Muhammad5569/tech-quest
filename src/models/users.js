@@ -53,7 +53,11 @@ const userSchema = mongoose.Schema({
             default:Date.now
         }
     }],
-    attempts:[{ 
+    attempts:[{
+        questId:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Quest'
+        },
         value:{
             type: String,
         }

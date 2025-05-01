@@ -42,7 +42,6 @@ router.patch('/quests/:id', async (req,res) => {
     try {
        updates.forEach(update => { req.quest[update] = req.body[update]  });
     } catch (error) {
-        console.error('Error:', error); // Log the error for debugging
         res.status(500).send({ error: error.message }); // Send a proper error response
     }
 })
@@ -118,22 +117,59 @@ router.post('/quests/reset', auth, async(req, res) => {
         res.send(error).status(500)
     }
 })
-//Manual checking                       
-router.post('/quests/attempts', auth, async(req, res) => {
+//Making Attempt                   
+router.post('/quests/attempts/:questId', auth, async(req, res) => {
     const userId = req.user.id
+    const questId = req.params.questId
     try {        
         const user = await User.findById(userId)
         const attempt = req.body.attempt
         //const attempt = JSON.parse(req.body.attempt)
-        // user.attempts.push({
-        //     value: attempt
-        // })
+        user.attempts.push({
+            questId:questId,
+            value: attempt
+        })
+        await user.save()
         console.log(attempt, 'attempt')
         res.send(user)
     } catch (error) {
         res.send({message:error.message})
     }
 })
+//Checking attemt           SuperADMIN
+router.patch('/quests/attempts/:id', auth, async (req, res) => {
+    const userId = req.user._id;
+    const questId = req.params.id;
+    
+    try {
+      const user = await User.findById(userId);
+      
+      // Find the attempt using correct comparison operator (===)
+      const attemptIndex = user.attempts.findIndex(attempt => 
+        attempt._id.toString() === req.body.attemptId
+      );
+      
+      if (attemptIndex === -1) {
+        return res.status(404).send({ message: 'Attempt not found' });
+      }
+      
+      // If attempt is successful, add points and mark quest as solved
+      if (req.body.status === "true") {
+        user.score += 10;
+        user.solvedQuests.push({ questId: questId });
+      }
+      
+      // Remove the attempt from user's attempts array
+      user.attempts.splice(attemptIndex, 1);
+      
+      await user.save();
+      res.send(user);
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  });
 
 
 module.exports = router
+
+
