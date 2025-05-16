@@ -8,6 +8,18 @@ router.post('/users', async (req, res) => {
     
     try {
         const user = await User.create(req.body)
+        const token = await user.generateAuthToken()
+        res.cookie('userType', user.role,{
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+          } )
+        res.cookie('authToken', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            maxAge: 3600000 // 1 hour
+          });
         res.status(201).send(user)
     } catch (error) {
         if (error.code === 11000) {
