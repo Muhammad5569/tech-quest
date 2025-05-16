@@ -62,7 +62,7 @@ router.post('/users/login', async (req, res) => {
         res.send(user)
     } catch (error) {
         res.status(401).send({ 
-            error: error.message || 'Login failed' 
+            message: error.message || 'Login failed' 
         });
     }   
 })
@@ -108,7 +108,7 @@ router.patch('/users/me', auth, async (req, res) => {
       // Save 
       await req.user.save();
     
-      res.send(req.user);
+      res.send(req.user);   
     } catch (error) {
       res.status(400).send(error);
     }
