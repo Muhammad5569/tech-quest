@@ -57,8 +57,10 @@ router.post('/users/login', async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: 'none',
-            maxAge: 3600000 // 1 hour
+            maxAge: 7200000 // 2 hour
           });
+          console.log(user)
+          console.log(req)
         res.send(user)
     } catch (error) {
         res.status(401).send({ 
