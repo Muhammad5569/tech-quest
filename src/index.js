@@ -8,6 +8,7 @@ const userRouter = require('./routers/users');
 const questRouter = require('./routers/quests');
 const cors = require('cors');
 const morgan =require('morgan')
+const cookieParser = require('cookie-parser');
 // Initialize Express
 const app = express();
 app.use(morgan('tiny'))
@@ -18,6 +19,7 @@ mongoose.connect('mongodb://localhost:27017/techquest')
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin: ['https://tech-quest.uz', 'http://localhost'],
