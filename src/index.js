@@ -20,7 +20,7 @@ mongoose.connect('mongodb://localhost:27017/techquest')
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: 'https://tech-quest.uz',
+  origin: ['https://tech-quest.uz', 'http://localhost:5173'],
   credentials: true  
 }));
 
