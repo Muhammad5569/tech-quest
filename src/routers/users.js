@@ -48,17 +48,20 @@ router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
-        res.cookie('userType', user.role,{
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none',
-          } )
-        res.cookie('authToken', token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none',
-            maxAge: 7200000 // 2 hour
+        
+        if(user)
+            {res.cookie('userType', user.role,{
+               httpOnly: false,
+               secure: true,
+               sameSite: 'none',
+             } )
+            res.cookie('authToken', token, {
+               httpOnly: true,
+               secure: true,
+               sameSite: 'none',
+               maxAge: 7200000 // 2 hour
           });
+        }
           console.log(user)
           console.log(req)
         res.send(user)
