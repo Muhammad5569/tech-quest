@@ -41,6 +41,8 @@ router.patch('/quests/:id', async (req,res) => {
     const updates = Object.keys(req.body)
     try {
        updates.forEach(update => { req.quest[update] = req.body[update]  });
+       await req.quest.save()
+       res.send(req.quest)
     } catch (error) {
         res.status(500).send({ error: error.message }); // Send a proper error response
     }
@@ -144,7 +146,6 @@ router.patch('/quests/attempts/:id', auth, async (req, res) => {
     try {
       const user = await User.findById(userId);
       
-      // Find the attempt using correct comparison operator (===)
       const attemptIndex = user.attempts.findIndex(attempt => 
         attempt._id.toString() === req.body.attemptId
       );
