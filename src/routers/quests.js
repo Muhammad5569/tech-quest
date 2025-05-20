@@ -139,7 +139,7 @@ router.post('/quests/attempts/:questId', auth, async(req, res) => {
     }
 })
 //Checking attemt           SuperADMIN
-router.post('/quests/attempts/check/:id', async (req, res) => {
+router.patch('/quests/attempts/:id', async (req, res) => {
     const userId = req.user._id;
     const questId = req.params.id;
     

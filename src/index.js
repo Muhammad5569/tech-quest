@@ -21,14 +21,16 @@ mongoose.connect('mongodb://localhost:27017/techquest')
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
+const corsOptions = {
   origin: ['https://tech-quest.uz', 'http://localhost:5173'],
   methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true  
-}));
+  credentials: true
+};
 
-app.options('*', cors())
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 // Routes
 app.use(userRouter);
 app.use(questRouter);
