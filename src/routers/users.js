@@ -15,7 +15,7 @@ router.post('/users', async (req, res) => {
             sameSite: 'none',
           } )
         res.cookie('authToken', token, {
-            httpOnly: true,
+            httpOnly: false,
             secure: true,
             sameSite: 'none',
             maxAge: 3600000 // 1 hour
@@ -56,7 +56,7 @@ router.post('/users/login', async (req, res) => {
                sameSite: 'none',
              } )
             res.cookie('authToken', token, {
-               httpOnly: true,
+               httpOnly: false,
                secure: true,
                sameSite: 'none',
                maxAge: 7200000 // 2 hour
