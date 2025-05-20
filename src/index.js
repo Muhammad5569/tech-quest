@@ -23,6 +23,8 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin: ['https://tech-quest.uz', 'http://localhost:5173'],
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true  
 }));
 
