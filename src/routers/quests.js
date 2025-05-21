@@ -140,7 +140,7 @@ router.post('/quests/attempts/:questId', auth, async(req, res) => {
 })
 //Checking attemt           SuperADMIN
 router.patch('/quests/attempts/:id', async (req, res) => {
-    const userId = req.user._id;
+    const userId = req.body.userId
     const questId = req.params.id;
     
     try {
@@ -155,7 +155,7 @@ router.patch('/quests/attempts/:id', async (req, res) => {
       }
       
       // If attempt is successful, add points and mark quest as solved
-      if (req.body.status === "true") {
+      if (req.body.status === "true" || req.body.status === true) {
         user.score += 10;
         user.solvedQuests.push({ questId: questId });
       }
